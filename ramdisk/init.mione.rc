@@ -17,8 +17,9 @@ on init
     mkdir /storage 0775 system system
     mkdir /storage/sdcard0 0775 system system
     mkdir /storage/sdcard1 0775 system system
-    mkdir /storage/usbdisk0 0775 system system
+    mkdir /storage/usbdisk0 0000 system system
     mkdir /vendor/firmware 0775 system system
+    chmod 0644 /proc/cmdline 
 
 # for backwards compatibility
     symlink /storage/sdcard0 /sdcard
@@ -54,8 +55,9 @@ on fs
 #    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/userdata /data relatime nosuid nodev barrier=1 journal_checksum noauto_da_alloc
     mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persist /persist relatime nosuid nodev barrier=1 journal_checksum noauto_da_alloc
 #    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/cache /cache relatime nosuid nodev barrier=1 journal_checksum noauto_da_alloc
-#    #Setting permissons for misc partition
+    #Setting permissons for misc partition
     chmod 0666 /dev/block/platform/msm_sdcc.1/by-name/misc
+
 
 on post-fs-data
 # double check /data/radio
