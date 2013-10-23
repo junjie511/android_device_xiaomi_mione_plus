@@ -23,11 +23,17 @@ $(call inherit-product-if-exists, vendor/xiaomi/mione_plus/mione_plus-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/xiaomi/mione_plus/overlay
 
+#add superuser
+SUPERUSER_EMBEDDED := true
+
 # GPS and Light
 PRODUCT_PACKAGES += \
     gps.mione \
     lights.mione \
-    libreadmac
+    libreadmac \
+    Superuser \
+    su
+
 
 # gps.conf
 PRODUCT_COPY_FILES += \
@@ -46,7 +52,7 @@ PRODUCT_COPY_FILES += \
     device/xiaomi/mione_plus/ramdisk/init.mione.syspart_system.rc:root/init.mione.syspart_system.rc \
     device/xiaomi/mione_plus/ramdisk/init.mione.syspart_system1.rc:root/init.mione.syspart_system1.rc \
     device/xiaomi/mione_plus/ramdisk/mount_ext4.sh:/system/bin/mount_ext4.sh \
-    device/xiaomi/mione_plus/ramdisk/fstab.mione:/root/fstab.mione
+    device/xiaomi/mione_plus/ramdisk/fstab.mione:/root/fstab.mione \
 
 # wifi
 PRODUCT_COPY_FILES += \
@@ -68,6 +74,11 @@ PRODUCT_COPY_FILES += $(shell \
     | sed -r 's/^\/?(.*\/)([^/ ]+)$$/\1\2:system\/lib\/modules\/\2/' \
     | tr '\n' ' ')
 endif
+
+#add location Phone
+PRODUCT_COPY_FILES += \
+    device/xiaomi/mione_plus/prebuilt/libphoneloc-jni.so:system/lib/libphoneloc-jni.so \
+    device/xiaomi/mione_plus/prebuilt/phoneloc.dat:system/usr/share/phoneloc.dat
 
 # Permissions
 PRODUCT_COPY_FILES += \
